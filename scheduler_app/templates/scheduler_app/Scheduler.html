@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href="https://dl.dropboxusercontent.com/s/thqhda8nk5xl4ac/main.css?dl=1" rel="stylesheet" /> <!-- Core css --> 
+<link href="https://dl.dropboxusercontent.com/s/c6rm95oyq8zzjrz/daygrid_main.css?dl=1" rel="stylesheet" /> <!-- daygrid css --> 
+<link href="https://dl.dropboxusercontent.com/s/7qsnp5072jddkbj/timegrid_main.css?dl=1" rel="stylesheet" /> <!--timegrid css -->
+<link href="https://dl.dropboxusercontent.com/s/7nl45exb3rkwej3/list_main.css?dl=1" rel="stylesheet" /> <!--list css -->
+<link href="https://dl.dropboxusercontent.com/s/inrtwvxx75qm2rs/timeline_main.css?dl=1" rel="stylesheet" /> <!-- timeline css --> 
+<link href="https://dl.dropboxusercontent.com/s/04pcb19x53ua8js/resource_timeline_main.css?dl=1" rel="stylesheet" /> <!-- resource timeline css -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> <!--bootstrap css-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.css"> <!--bootstrap select css-->
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script> <!--jquery cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js"></script> <!--d3 cdn-->
+<script src="https://unpkg.com/popper.js"></script> <!--popper cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script> <!--moment js cdn-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> <!--bootstrap js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.js"></script> <!--bootstrap select js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.js"></script>
+<script src="https://unpkg.com/tooltip.js"></script> <!--tooltip cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.js"></script> <!--js color cdn-->
+
+<script src="https://dl.dropboxusercontent.com/s/96w8t0jng58rsyy/main.js?dl=1"></script> <!-- Core js  -->
+<script src="https://dl.dropboxusercontent.com/s/5rimyc4uflq16w4/resource_timegrid_main.js?dl=1"></script> <!-- Resource Timegrid js --> 
+<script src="https://dl.dropboxusercontent.com/s/ydkr12hihtuzfm2/interaction_main.js?dl=1"></script><!--  Interaction main js -->
+<script src="https://dl.dropboxusercontent.com/s/zax6yugh1lrg1td/luxon_main.js?dl=1"></script><!--  Luxon main js -->
+<script src="https://dl.dropboxusercontent.com/s/ivp8qfg7cu0azql/daygrid_main.js?dl=1"></script> <!-- daygrid js -->
+<script src="https://dl.dropboxusercontent.com/s/02zuvaflwou5ih3/timegrid_main.js?dl=1"></script> <!-- timegrid js -->
+<script src="https://dl.dropboxusercontent.com/s/bij4kyj0dab0wsx/list_main.js?dl=1"></script> <!-- list js -->
+<script src="https://dl.dropboxusercontent.com/s/dtq2qpbpe11gapn/timeline_main.js?dl=1"></script> <!-- timeline js -->
+<script src="https://dl.dropboxusercontent.com/s/7gv2k4s69j7kzhh/rrule_main.js?dl=1"></script> <!-- rrule js -->
+<script src="https://dl.dropboxusercontent.com/s/3ocwfmn1gr9ajwd/resource_common_main.js?dl=1"></script> <!--resource common js-->
+<script src="https://dl.dropboxusercontent.com/s/7m8eixl1zxtdj9t/resource_timeline_main.js?dl=1"></script> <!--resource timeline js -->
+<script src="https://dl.dropboxusercontent.com/s/8z6iema239bg67g/resource_daygrid_main.js?dl=1"></script> <!--resource daygrid js -->
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list', 'resourceTimeline' ],
+      now: '2019-06-07',
+      editable: true, // enable draggable events
+      aspectRatio: 1.8,
+      scrollTime: '00:00', // undo default 6am scrollTime
+      header: {
+        left: 'today prev,next',
+        center: 'title',
+        right: 'resourceTimelineDay,resourceTimelineThreeDays,timeGridWeek,dayGridMonth,listWeek'
+      },
+      defaultView: 'resourceTimelineDay',
+      views: {
+        resourceTimelineThreeDays: {
+          type: 'resourceTimeline',
+          duration: { days: 3 },
+          buttonText: '3 days'
+        }
+      },
+      resourceLabelText: 'Rooms',
+      resources: '/api/person/',
+      events: [
+        { id: '1', resourceId: 'b', start: '2019-06-07T02:00:00', end: '2019-06-07T07:00:00', title: 'event 1' },
+        { id: '2', resourceId: 'c', start: '2019-06-07T05:00:00', end: '2019-06-07T22:00:00', title: 'event 2' },
+        { id: '3', resourceId: 'd', start: '2019-06-06', end: '2019-06-08', title: 'event 3' },
+        { id: '4', resourceId: 'e', start: '2019-06-07T03:00:00', end: '2019-06-07T08:00:00', title: 'event 4' },
+        { id: '5', resourceId: 'f', start: '2019-06-07T00:30:00', end: '2019-06-07T02:30:00', title: 'event 5' }
+      ]
+    });
+
+    calendar.render();
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 50px auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+</body>
+</html>
