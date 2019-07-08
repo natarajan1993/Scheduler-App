@@ -6,35 +6,29 @@ import json
 
 class Person(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE)
-	name = models.CharField(max_length = 100)
+	title = models.CharField(max_length = 100)
 	# children = JSONField()
 
 	def __str__(self):
-		return self.name
+		return self.title
 	
-	# def save(self, *args, **kwargs):
-	# 	self.children = [{'id':self.name+'_Scheduled','title':'Scheduled'},
-	# 					{'id':self.name+'_Actual','title':'Actual'}]
-	# 	super(Person, self).save(*args, **kwargs) # Call the "real" save() method.
-	
-	# def get_children(self):
-	# 	return [{'id':self.name+'_Scheduled','title':'Scheduled'},
-	# 			{'id':self.name+'_Actual','title':'Actual'},]
 	
 	@property
 	def children(self):
-		return [{'id':self.name+'_Scheduled','title':'Scheduled'},
-				{'id':self.name+'_Actual','title':'Actual'},]
+		return [{'id':self.title+'_Scheduled','title':'Scheduled'},
+				{'id':self.title+'_Actual','title':'Actual'},]
 
 
 
 class Event(models.Model):
+
+	event_choices = [('Scheduled','Scheduled'),('Actual','Actual')]
+
 	title = models.CharField(max_length = 100)
-	start_scheduled = models.DateTimeField(auto_now_add = False) 
-	end_scheduled = models.DateTimeField(auto_now_add = False) 
-	start_actual = models.DateTimeField(auto_now_add = False) 
-	end_actual = models.DateTimeField(auto_now_add = False)
+	start = models.DateTimeField(auto_now_add = False) 
+	end = models.DateTimeField(auto_now_add = False)
+	event_type = models.CharField(choices=event_choices, max_length=9) 
 	person = models.ForeignKey(Person, on_delete = models.CASCADE)
 	
 	def __str__(self):
-		return self.title
+		return self.title + '_' + self.event_type

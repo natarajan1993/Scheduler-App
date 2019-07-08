@@ -4,6 +4,7 @@ from . import views as api_view
 
 router = DefaultRouter()
 router.register('person', api_view.PersonViewset, base_name = 'person')
+router.register('event', api_view.EventViewset, base_name = 'event')
 
 urlpatterns = [
     path('',include(router.urls)),
